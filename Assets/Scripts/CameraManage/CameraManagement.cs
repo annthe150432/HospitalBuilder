@@ -21,11 +21,11 @@ public class CameraManagement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetAxis("Mouse ScrollWheel") > 0f) // forward
+        if (Input.GetAxis("Mouse ScrollWheel") > 0f && Camera.main.orthographicSize < 10f) // forward
         {
             Camera.main.orthographicSize += 0.1f;
         }
-        if (Input.GetAxis("Mouse ScrollWheel") < 0f) // backwards
+        if (Input.GetAxis("Mouse ScrollWheel") < 0f && Camera.main.orthographicSize > 3f)// backwards
         {
             Camera.main.orthographicSize -= 0.1f;
         }
