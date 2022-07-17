@@ -38,7 +38,6 @@ public class Testing : MonoBehaviour
         }
         unwalkable.Add(pathFinding.GetNode(25, 4));
         unwalkable.Add(pathFinding.GetNode(25, 5));
-
         unwalkable.Add(pathFinding.GetNode(12, 3));
         unwalkable.Add(pathFinding.GetNode(12, 0));
         for (int i = 0; i <= 3; i++)
@@ -46,7 +45,27 @@ public class Testing : MonoBehaviour
             unwalkable.Add(pathFinding.GetNode(19, i));
         }
 
+        // first room on top
+        for (int i = 8; i <= 14; i++)
+        {
+            unwalkable.Add(pathFinding.GetNode(13, i));
+        }
+        for (int i = 15; i <= 19; i++)
+        {
+            unwalkable.Add(pathFinding.GetNode(i, 8));
+            unwalkable.Add(pathFinding.GetNode(i, 9));
+        }
+        for (int i = 8; i <= 14; i++)
+        {
+            unwalkable.Add(pathFinding.GetNode(19, i));
+        }
 
+        // second room on top
+        for(int i = 21; i <= 25; i++)
+        {
+            unwalkable.Add(pathFinding.GetNode(i, 8));
+            unwalkable.Add(pathFinding.GetNode(i, 9));
+        }
         foreach (PathNode node in unwalkable)
         {
             node.SetIsWalkable(false);

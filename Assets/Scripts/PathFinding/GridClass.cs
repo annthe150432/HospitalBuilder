@@ -41,7 +41,7 @@ namespace Assets.Scripts.PathFinding
                 }
             }
 
-            bool showDebug = false;
+            bool showDebug = true;
             if (showDebug)
             {
                 //TextMesh[,] debugTextArray = new TextMesh[width, height];
