@@ -11,7 +11,7 @@ public class GridManagement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        grid = GridSystem.Instance;
+        //grid = GridSystem.Instance;
     }
 
     void Update()
