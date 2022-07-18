@@ -76,7 +76,7 @@ public class GridSystem
     {
         int i = (int)(x / tileSize);
         int j = (int)(y / tileSize);
-        if (i >= cols || j >= rows || i < -4 || j < -11)
+        if (i >= cols || j >= rows || i < 0 || j < 0)
         {
             tile = null;
             return false;
@@ -91,7 +91,7 @@ public class GridSystem
         if (direction == Direction.Down) j--;
         if (direction == Direction.Left) i--;
         if (direction == Direction.Right) i++;
-        if (i<-4 || i>cols || j<-11 || j>rows)
+        if (i<0 || i>cols || j<0 || j>rows)
         {
             tile = null;
             return false;
