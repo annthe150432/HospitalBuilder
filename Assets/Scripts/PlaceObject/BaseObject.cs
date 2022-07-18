@@ -33,9 +33,14 @@ public class BaseObject : MonoBehaviour
     private bool PlaceObject(float x, float y)
     {
         if (tile != null)
+        {
             GridSystem.Instance.ReturnTile(tile);
-        bool placed = GridSystem.Instance.GetTile(x, y, out tile);
-        if (!placed) return false;
+        }
+        Tile getTile = null;
+        bool placeable = GridSystem.Instance.GetTile(x, y, out getTile);
+        if (!placeable) return false;
+        if (getTile.InUse) return false;
+        tile = getTile;
         GridSystem.Instance.UseTile(tile);
         gameObject.transform.position = new Vector3(tile.X, tile.Y, 1);
         return true;
