@@ -76,7 +76,7 @@ public class Testing : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        /*if (Input.GetMouseButtonDown(0))
         {
             Vector3 mouseWorldPosition = UtilsClass.GetMouseWorldPosition();
             pathFinding.GetGrid().GetXY(mouseWorldPosition, out int x, out int y);
@@ -93,14 +93,14 @@ public class Testing : MonoBehaviour
                 }
             }
             //characterPathfinding.SetTargetPosition(mouseWorldPosition);
-        }
+        }*/
 
-        if (Input.GetMouseButtonDown(1))
+        /*if (Input.GetMouseButtonDown(1))
         {
             Vector3 mouseWorldPosition = UtilsClass.GetMouseWorldPosition();
             pathFinding.GetGrid().GetXY(mouseWorldPosition, out int x, out int y);
             pathFinding.GetNode(x, y).SetIsWalkable(!pathFinding.GetNode(x, y).isWalkable);
-        }
+        }*/
 
     }
 }
