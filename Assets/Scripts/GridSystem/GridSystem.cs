@@ -19,7 +19,7 @@ public class GridSystem
             {
                 lock (locker)
                 {
-                    _instance = new GridSystem(22, 3, 1);
+                    _instance = new GridSystem(26, 14, 1);
                 }
             }
             return _instance;
@@ -31,9 +31,9 @@ public class GridSystem
         cols = width;
         rows = height;
         this.tileSize = tileSize;
-        for (int i=-4; i<cols; i++)
+        for (int i=0; i<cols; i++)
         {
-            for (int j=-11; j<rows; j++)
+            for (int j=0; j<rows; j++)
             {
                 Tuple<int, int> key = new Tuple<int, int>(i, j);
                 Tile tile = new Tile(i * tileSize + tileSize / 2, j * tileSize + tileSize / 2);
