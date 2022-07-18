@@ -32,8 +32,9 @@ public class ObjectFactory
     {
         ObjectFlyweight flyweight = GetObjectFlyweight(name);
         Tile tile = null;
-        bool result = GridSystem.Instance.GetTile(flyweight.Prefab.transform.position.x, flyweight.Prefab.transform.position.y, out tile);
-        if (!result) return;
+        bool placeable = GridSystem.Instance.GetTile(flyweight.Prefab.transform.position.x, flyweight.Prefab.transform.position.y, out tile);
+        if (!placeable) return;
+        if (tile.InUse) return;
         GameObject gameObject = GameObject.Instantiate(flyweight.Prefab);
         if (flyweight.Prefab.tag == "FunctionalObject")
         {
