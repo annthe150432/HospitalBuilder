@@ -31,17 +31,22 @@ public class ObjectFactory
     public void CreateObject(string name)
     {
         ObjectFlyweight flyweight = GetObjectFlyweight(name);
+        Tile tile = null;
+        bool result = GridSystem.Instance.GetTile(flyweight.Prefab.transform.position.x, flyweight.Prefab.transform.position.y, out tile);
+        if (!result) return;
         GameObject gameObject = GameObject.Instantiate(flyweight.Prefab);
         if (flyweight.Prefab.tag == "FunctionalObject")
         {
             FuntionalObject funcObj = gameObject.AddComponent<FuntionalObject>();
             funcObj.Flyweight = flyweight;
+            funcObj.PlaceObject(flyweight.Prefab.transform.position.x, flyweight.Prefab.transform.position.y);
             Objects.Add(funcObj);
         }
         else if (flyweight.Prefab.tag == "DecorationObject")
         {
             DecorationObject decorObj = gameObject.AddComponent<DecorationObject>();
             decorObj.Flyweight = flyweight;
+            decorObj.PlaceObject(flyweight.Prefab.transform.position.x, flyweight.Prefab.transform.position.y);
             Objects.Add(decorObj);
         }
     }

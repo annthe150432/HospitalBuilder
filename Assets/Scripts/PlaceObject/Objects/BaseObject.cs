@@ -30,7 +30,7 @@ public class BaseObject : MonoBehaviour
     {
         Camera.main.GetComponent<CameraManagement>().Dragable = true;
     }
-    private bool PlaceObject(float x, float y)
+    public bool PlaceObject(float x, float y)
     {
         if (tile != null)
         {
@@ -42,7 +42,7 @@ public class BaseObject : MonoBehaviour
         if (getTile.InUse) return false;
         tile = getTile;
         GridSystem.Instance.UseTile(tile);
-        gameObject.transform.position = new Vector3(tile.X, tile.Y, 1);
+        gameObject.transform.position = new Vector3(tile.X, tile.Y);
         return true;
     }
 }
