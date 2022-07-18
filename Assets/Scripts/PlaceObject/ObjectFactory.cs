@@ -21,17 +21,34 @@ public class ObjectFactory
                 lock (locker)
                 {
                     _instance = new ObjectFactory();
+                    _instance.Objects = new List<BaseObject>();
                 }
             }
             return _instance;
         }
     }
+    public List<BaseObject> Objects { get; set; }
     public void CreateObject(string name)
     {
         ObjectFlyweight flyweight = GetObjectFlyweight(name);
         GameObject gameObject = GameObject.Instantiate(flyweight.Prefab);
-        BaseObject bo = gameObject.AddComponent<BaseObject>();
-        bo.Flyweight = flyweight;
+        if (flyweight.Prefab.tag == "FunctionalObject")
+        {
+            FuntionalObject funcObj = gameObject.AddComponent<FuntionalObject>();
+            funcObj.Flyweight = flyweight;
+            Objects.Add(funcObj);
+        }
+        else if (flyweight.Prefab.tag == "DecorationObject")
+        {
+            DecorationObject decorObj = gameObject.AddComponent<DecorationObject>();
+            decorObj.Flyweight = flyweight;
+            Objects.Add(decorObj);
+        }
+    }
+    public FuntionalObject GetAvailableObject(string name)
+    {
+        FuntionalObject funcObj = (FuntionalObject)Objects.Find(o => o is FuntionalObject && o.Flyweight.Name == name && ((FuntionalObject)o).AvailableState == true);
+        return funcObj;
     }
     private ObjectFlyweight GetObjectFlyweight(string name)
     {
