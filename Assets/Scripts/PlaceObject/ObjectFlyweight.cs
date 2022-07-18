@@ -9,6 +9,7 @@ public class ObjectFlyweight : MonoBehaviour
 {
     [SerializeField]
     private GameObject prefab;
+    public string Name { get; set; }
     public ObjectFlyweight(GameObject prefab)
     {
         this.prefab = prefab;

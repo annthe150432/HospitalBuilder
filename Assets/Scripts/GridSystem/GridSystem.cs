@@ -36,7 +36,7 @@ public class GridSystem
             for (int j=-11; j<rows; j++)
             {
                 Tuple<int, int> key = new Tuple<int, int>(i, j);
-                Tile tile = new Tile(i*tileSize, j*tileSize);
+                Tile tile = new Tile(i * tileSize + tileSize / 2, j * tileSize + tileSize / 2);
                 grid.Add(key, tile);
                 Debug.DrawLine(new Vector2(i * tileSize, j * tileSize), new Vector2(i * tileSize, (j + 1) * tileSize), Color.white, 100f);
                 Debug.DrawLine(new Vector2(i * tileSize, j * tileSize), new Vector2((i + 1) * tileSize, j * tileSize), Color.white, 100f);
@@ -66,7 +66,7 @@ public class GridSystem
                 for (int j = rows; j < y; j++)
                 {
                     Tuple<int, int> key = new Tuple<int, int>(i, j);
-                    Tile tile = new Tile(i, j);
+                    Tile tile = new Tile(i * tileSize + tileSize / 2, j * tileSize + tileSize / 2);
                     grid.Add(key, tile);
                     Debug.DrawLine(new Vector2(i * tileSize, j * tileSize), new Vector2(i * tileSize, (j + 1) * tileSize));
                     Debug.DrawLine(new Vector2(i * tileSize, j * tileSize), new Vector2((i + 1) * tileSize, j * tileSize));
@@ -81,6 +81,21 @@ public class GridSystem
         int i = (int)(x / tileSize);
         int j = (int)(y / tileSize);
         if (i >= cols || j >= rows || i < 0 || j < 0)
+        {
+            tile = null;
+            return false;
+        }
+        Tuple<int, int> key = new Tuple<int, int>(i, j);
+        tile = grid[key];
+        return true;
+    }
+    public bool GetNeighborTile(int i, int j, Direction direction, out Tile tile)
+    {
+        if (direction == Direction.Up) j++;
+        if (direction == Direction.Down) j--;
+        if (direction == Direction.Left) i--;
+        if (direction == Direction.Right) i++;
+        if (i<-4 || i>cols || j<-11 || j>rows)
         {
             tile = null;
             return false;

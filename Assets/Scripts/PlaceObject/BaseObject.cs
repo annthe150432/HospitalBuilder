@@ -5,6 +5,7 @@ using UnityEngine;
 public class BaseObject : MonoBehaviour
 {
     private Tile tile;
+    private int type;
     private ObjectFlyweight flyweight;
     public BaseObject(Tile tile, ObjectFlyweight objectFlyweight)
     {
@@ -12,6 +13,7 @@ public class BaseObject : MonoBehaviour
         this.flyweight = objectFlyweight;
     }
     public Tile Tile { get => tile; }
+    public int ObjectType { get => type; }
     public ObjectFlyweight Flyweight { get => flyweight; }
     public bool PlaceObject(float x, float y)
     {
