@@ -6,38 +6,40 @@ using UnityEngine;
 public class CharacterPathfindingMovementHandler : MonoBehaviour
 {
 
-    private const float speed = 4f;
+    public float speed;
 
-/*    private V_UnitSkeleton unitSkeleton;
-    private V_UnitAnimation unitAnimation;
-    private AnimatedWalker animatedWalker;*/
     private int currentPathIndex;
     private List<Vector3> pathVectorList;
     public GameObject character;
-
+    List<Vector3> destinations;
     private void Start()
     {
-        character = GameObject.FindGameObjectWithTag("Player");
-        //Transform bodyTransform = GameObject.FindGameObjectWithTag("Player").transform;
-       /* unitSkeleton = new V_UnitSkeleton(1f, bodyTransform.TransformPoint, (Mesh mesh) => bodyTransform.GetComponent<MeshFilter>().mesh = mesh);
-        unitAnimation = new V_UnitAnimation(unitSkeleton);
-        animatedWalker = new AnimatedWalker(unitAnimation, UnitAnimType.GetUnitAnimType("dMarine_Idle"), UnitAnimType.GetUnitAnimType("dMarine_Walk"), 1f, 1f);
-  */  }
+        destinations = new List<Vector3>();
+        destinations = AddDestinations(destinations);
+
+        HandleMovement();
+        SetTargetPosition(destinations[0]);
+    }
 
     private void Update()
     {
         HandleMovement();
-        //unitSkeleton.Update(Time.deltaTime);
 
         if (Input.GetMouseButtonDown(0))
         {
-            //SetTargetPosition(UtilsClass.GetMouseWorldPosition());
-            SetTargetPosition(Vector3.zero);
+            int ran = Random.Range(1, destinations.Count);
+            SetTargetPosition(destinations[ran]);
+
+        }
+        if (GetPosition().y <= 1.5 && GetPosition().x >= 8 && GetPosition().x <= 11)
+        {
+            Destroy(gameObject);
         }
     }
 
     private void HandleMovement()
     {
+
         if (pathVectorList != null)
         {
             Vector3 targetPosition = pathVectorList[currentPathIndex];
@@ -55,7 +57,8 @@ public class CharacterPathfindingMovementHandler : MonoBehaviour
                 if (currentPathIndex >= pathVectorList.Count)
                 {
                     StopMoving();
-                  //  animatedWalker.SetMoveVector(Vector3.zero);
+
+                    //  animatedWalker.SetMoveVector(Vector3.zero);
                 }
             }
         }
@@ -85,5 +88,18 @@ public class CharacterPathfindingMovementHandler : MonoBehaviour
             pathVectorList.RemoveAt(0);
         }
     }
-
+    List<Vector3> AddDestinations(List<Vector3> destinations)
+    {
+        destinations.Add(new Vector3((float)4.2, 11)); // reception 
+        destinations.Add(new Vector3(2, 2)); // rooms
+        destinations.Add(new Vector3(22, 11));
+        destinations.Add(new Vector3(16, 12));
+        destinations.Add(new Vector3(17, 2));
+        destinations.Add(new Vector3(24, 1));
+        destinations.Add(new Vector3(9, 0));// end
+        destinations.Add(new Vector3(9, 0));// end
+        destinations.Add(new Vector3(9, 0));// end
+        destinations.Add(new Vector3(9, 0));// end
+        return destinations;
+    }
 }
