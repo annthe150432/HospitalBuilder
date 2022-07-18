@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class CameraManagement : MonoBehaviour
 {
     private Transform cam;
     private float dragSpeed = 0.6f;
-
+    public bool Dragable = true;
     private void Awake()
     {
         cam = Camera.main.transform;
@@ -29,7 +30,7 @@ public class CameraManagement : MonoBehaviour
         {
             Camera.main.orthographicSize -= 0.1f;
         }
-        if (Input.GetMouseButton(0) && (Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0))
+        if (Dragable && !EventSystem.current.IsPointerOverGameObject() && Input.GetMouseButton(0) && (Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0))
         {
             float x = -Input.GetAxis("Mouse X") * dragSpeed;
             float y = -Input.GetAxis("Mouse Y") * dragSpeed;

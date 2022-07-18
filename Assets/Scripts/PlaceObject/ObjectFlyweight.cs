@@ -5,19 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class ObjectFlyweight : MonoBehaviour
+public class ObjectFlyweight
 {
-    [SerializeField]
-    private GameObject prefab;
+    public GameObject Prefab { get; set; }
     public string Name { get; set; }
     public ObjectFlyweight(GameObject prefab)
     {
-        this.prefab = prefab;
-    }
-    public bool RemoveObject()
-    {
-        Destroy(gameObject);
-        return true;
+        this.Prefab = prefab;
     }
 }
 

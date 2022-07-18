@@ -12,7 +12,7 @@ public class ObjectFactory
     {
         flyweights = new List<ObjectFlyweight>();
     }
-    public ObjectFactory Instance
+    public static ObjectFactory Instance
     {
         get
         {
@@ -26,16 +26,21 @@ public class ObjectFactory
             return _instance;
         }
     }
-    public BaseObject CreateObject(float x, float y)
+    public void CreateObject(string name)
     {
-        ObjectFlyweight flyweight = GetObjectFlyweight();
-        GridSystem.Instance.GetTile(x, y, out Tile tile);
-        BaseObject baseObject = new BaseObject(tile, flyweight);
-        return baseObject;
+        ObjectFlyweight flyweight = GetObjectFlyweight(name);
+        GameObject gameObject = GameObject.Instantiate(flyweight.Prefab);
+        BaseObject bo = gameObject.AddComponent<BaseObject>();
+        bo.Flyweight = flyweight;
     }
-    private ObjectFlyweight GetObjectFlyweight()
+    private ObjectFlyweight GetObjectFlyweight(string name)
     {
-
-        return null;
+        ObjectFlyweight flyweight = flyweights.Find(f => f.Name == name);
+        if (flyweight == null)
+        {
+            flyweight = new ObjectFlyweight(Resources.Load<GameObject>("Prefabs/" + name));
+            flyweights.Add(flyweight);
+        }
+        return flyweight;
     }
 }

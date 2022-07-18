@@ -4,21 +4,40 @@ using UnityEngine;
 
 public class BaseObject : MonoBehaviour
 {
-    private Tile tile;
-    private int type;
-    private ObjectFlyweight flyweight;
-    public BaseObject(Tile tile, ObjectFlyweight objectFlyweight)
-    {
-        this.tile = tile;
-        this.flyweight = objectFlyweight;
-    }
+    private Tile tile = null;
+    private ObjectFlyweight flyweight = null;
     public Tile Tile { get => tile; }
-    public int ObjectType { get => type; }
-    public ObjectFlyweight Flyweight { get => flyweight; }
-    public bool PlaceObject(float x, float y)
+    private void Start()
     {
-        GridSystem.Instance.GetTile(x, y, out tile);
-        if (tile == null) return false;
+    }
+    public ObjectFlyweight Flyweight { 
+        get => flyweight;
+        set
+        {
+            if (flyweight == null)
+                flyweight = value;
+        }
+    }
+    private void OnMouseDrag()
+    {
+        Camera.main.GetComponent<CameraManagement>().Dragable = false;
+        Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        float x = worldPosition.x;
+        float y = worldPosition.y;
+        bool result = PlaceObject(x, y);
+    }
+    private void OnMouseUp()
+    {
+        Camera.main.GetComponent<CameraManagement>().Dragable = true;
+    }
+    private bool PlaceObject(float x, float y)
+    {
+        if (tile != null)
+            GridSystem.Instance.ReturnTile(tile);
+        bool placed = GridSystem.Instance.GetTile(x, y, out tile);
+        if (!placed) return false;
+        GridSystem.Instance.UseTile(tile);
+        gameObject.transform.position = new Vector3(tile.X, tile.Y, 1);
         return true;
     }
 }

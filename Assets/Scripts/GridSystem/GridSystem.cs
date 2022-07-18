@@ -43,18 +43,14 @@ public class GridSystem
             }
         }
     }
-    public bool UseTile(int x, int y)
+    public bool UseTile(Tile tile)
     {
-        if (x >= cols || y >= rows || x < 0 || y < 0) return false;
-        Tuple<int, int> key = new Tuple<int, int>(x, y);
-        grid[key].UseTile();
+        tile.UseTile();
         return true;
     }
-    public bool ReturnTile(int x, int y)
+    public bool ReturnTile(Tile tile)
     {
-        if (x >= cols || y >= rows || x < 0 || y < 0) return false;
-        Tuple<int, int> key = new Tuple<int, int>(x, y);
-        grid[key].UnuseTile();
+        tile.UnuseTile();
         return true;
     }
     public bool ExtendGrid(int x, int y)
@@ -80,7 +76,7 @@ public class GridSystem
     {
         int i = (int)(x / tileSize);
         int j = (int)(y / tileSize);
-        if (i >= cols || j >= rows || i < 0 || j < 0)
+        if (i >= cols || j >= rows || i < -4 || j < -11)
         {
             tile = null;
             return false;
