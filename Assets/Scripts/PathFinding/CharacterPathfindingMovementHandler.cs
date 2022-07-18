@@ -1,6 +1,7 @@
 using Assets.Scripts.PathFinding.Utils;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class CharacterPathfindingMovementHandler : MonoBehaviour
@@ -14,12 +15,24 @@ public class CharacterPathfindingMovementHandler : MonoBehaviour
     List<Vector3> destinations;
     public bool isMoving;
     Timer timer;
+    LinkedList<string> checkin;
     private void Start()
     {
+        checkin = new LinkedList<string>();
+        int ran = Random.Range(1, 3);
+        if (ran == 1)
+        {
+            checkin.AddFirst("Bed");
+        }
+        else
+        {
+            checkin.AddFirst("Blood");
+        }
+        checkin.AddFirst("Table");
         destinations = new List<Vector3>();
         destinations = AddDestinations(destinations);
         timer = gameObject.AddComponent<Timer>();
-        timer.Duration = 1f;
+        timer.Duration = 1.5f;
         isMoving = true;
         HandleMovement();
         SetTargetPosition(destinations[0]);
@@ -32,13 +45,20 @@ public class CharacterPathfindingMovementHandler : MonoBehaviour
         if (!isMoving && !timer.Running)
         {
             //int ran = Random.Range(1, destinations.Count);
-            FuntionalObject funtionalObject = ObjectFactory.Instance.GetAvailableObject("Table");
+            //SetTargetPosition(destinations[ran]);
+            if (checkin.Count == 0)
+            {
+                SetTargetPosition(destinations[destinations.Count-1]); // get out
+            }
+            string des = checkin.First();
+            FuntionalObject funtionalObject = ObjectFactory.Instance.GetAvailableObject(des);
             if (funtionalObject == null)
             {
                 return;
             }
             Vector3 target = new Vector3(funtionalObject.Tile.X, funtionalObject.Tile.Y);
             SetTargetPosition(target);
+            checkin.RemoveFirst();
             isMoving = true;
         }
         if (GetPosition().y <= 1.5 && GetPosition().x >= 8 && GetPosition().x <= 11)
