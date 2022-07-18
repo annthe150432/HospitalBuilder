@@ -66,10 +66,17 @@ public class Testing : MonoBehaviour
             unwalkable.Add(pathFinding.GetNode(i, 8));
             unwalkable.Add(pathFinding.GetNode(i, 9));
         }
+        // trees
+        unwalkable.Add(pathFinding.GetNode(6, 12));
+        unwalkable.Add(pathFinding.GetNode(7, 12));
+        unwalkable.Add(pathFinding.GetNode(11, 12));
+        unwalkable.Add(pathFinding.GetNode(12, 12));
         foreach (PathNode node in unwalkable)
         {
             node.SetIsWalkable(false);
         }
+
+
         return;
     }
 

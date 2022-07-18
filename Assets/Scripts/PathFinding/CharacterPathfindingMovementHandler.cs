@@ -12,11 +12,15 @@ public class CharacterPathfindingMovementHandler : MonoBehaviour
     private List<Vector3> pathVectorList;
     public GameObject character;
     List<Vector3> destinations;
+    public bool isMoving;
+    Timer timer;
     private void Start()
     {
         destinations = new List<Vector3>();
         destinations = AddDestinations(destinations);
-
+        timer = gameObject.AddComponent<Timer>();
+        timer.Duration = 1f;
+        isMoving = true;
         HandleMovement();
         SetTargetPosition(destinations[0]);
     }
@@ -25,11 +29,17 @@ public class CharacterPathfindingMovementHandler : MonoBehaviour
     {
         HandleMovement();
 
-        if (Input.GetMouseButtonDown(0))
+        if (!isMoving && !timer.Running)
         {
-            int ran = Random.Range(1, destinations.Count);
-            SetTargetPosition(destinations[ran]);
-
+            //int ran = Random.Range(1, destinations.Count);
+            FuntionalObject funtionalObject = ObjectFactory.Instance.GetAvailableObject("Table");
+            if (funtionalObject == null)
+            {
+                return;
+            }
+            Vector3 target = new Vector3(funtionalObject.Tile.X, funtionalObject.Tile.Y);
+            SetTargetPosition(target);
+            isMoving = true;
         }
         if (GetPosition().y <= 1.5 && GetPosition().x >= 8 && GetPosition().x <= 11)
         {
@@ -39,7 +49,6 @@ public class CharacterPathfindingMovementHandler : MonoBehaviour
 
     private void HandleMovement()
     {
-
         if (pathVectorList != null)
         {
             Vector3 targetPosition = pathVectorList[currentPathIndex];
@@ -71,6 +80,9 @@ public class CharacterPathfindingMovementHandler : MonoBehaviour
     private void StopMoving()
     {
         pathVectorList = null;
+        isMoving = false;
+        timer.Run();
+        print("Stop moving");
     }
 
     public Vector3 GetPosition()
